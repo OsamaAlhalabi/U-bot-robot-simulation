@@ -1,0 +1,224 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.7249863564755498 -0.3022910828985661 0.6188819629980498 0.7923567455981807
+  position -1.2290388279864801 1.4207246698551577 2.770577632339269
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 4 4
+  tileSize 1 1
+}
+Youbot {
+}
+Solid {
+  translation 0.4 0.13 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+Solid {
+  translation 0.16 0.05 -0.25
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(1)"
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+Solid {
+  translation 0.16 0.05 0.25
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(2)"
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+Solid {
+  translation -0.13 0.19 -0.12
+  rotation 1 0 0 -0.261795307179586
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(3)"
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+Solid {
+  translation -0.13 0.19 0.01
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(4)"
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+Solid {
+  translation -0.2 0.19 0.01
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(5)"
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+Solid {
+  translation -0.2 0.19 -0.08
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(6)"
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+Solid {
+  translation -0.07 0.19 -0.08
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(7)"
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+Solid {
+  translation -0.08 0.19 0.11
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(8)"
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+Solid {
+  translation -0.05 0.19 0.03
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.03
+        subdivision 2
+      }
+    }
+  ]
+  name "solid(9)"
+  boundingObject Sphere {
+    radius 0.03
+    subdivision 2
+  }
+  physics Physics {
+  }
+}
+PlasticCrate {
+  translation -0.14 0.17 0
+  size 0.25 0.1 0.4
+  color 0 0 0
+  mass 0.3
+}
