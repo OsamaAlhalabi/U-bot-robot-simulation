@@ -56,7 +56,7 @@ Solid {
   }
 }
 Solid {
-  translation 0.16 0.05 0.25
+  translation 0.18 0.05 0.25
   children [
     Shape {
       appearance PBRAppearance {

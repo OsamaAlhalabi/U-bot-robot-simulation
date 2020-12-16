@@ -108,12 +108,30 @@ static void move_Kuka(char d , float t){
   }
    passive_wait(t);
 }
+static void directed_move(double x, double y, double z){
+  gripper_release();
+  arm_ik(x,y,z);
+  passive_wait(2.0);
+  gripper_release();
+  arm_set_height(ARM_FRONT_FLOOR);
+  passive_wait(5.0);
+  gripper_grip();
+  passive_wait(1.0);
+  arm_reset();
+  passive_wait(3.0);
+  arm_set_height(ARM_BACK_PLATE_HIGH);
+  passive_wait(3.0);
+  gripper_release();
+  passive_wait(1.0);
+  arm_reset();
+}
 static void automatic_behavior() {
-  grap_front();
-  grap_right();
-  grap_left();
-  move_Kuka('f',2.0f);
-  move_Kuka('b',3.0f);
+  // grap_front();
+  // grap_right();
+  // grap_left();
+  // move_Kuka('f',2.0f);
+  // move_Kuka('b',3.0f);
+  directed_move(0.16f,0.0298225,1.25);
 }
 
 static void display_helper_message() {
