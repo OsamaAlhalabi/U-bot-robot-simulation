@@ -18,7 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AvoidObsticels.cpp">
+    <ClCompile Include="AvoidObstacles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(WEBOTS_HOME)\resources\languages\cpp\Accelerometer.cpp">
