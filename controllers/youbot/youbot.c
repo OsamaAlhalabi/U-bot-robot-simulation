@@ -108,31 +108,35 @@ static void passive_wait(double sec) {
   // }
    // passive_wait(t);
 // }
-// static void directed_move(double x, double y, double z){
-  // gripper_release();
-  // arm_ik(x,y,z);
-  // passive_wait(2.0);
-  // gripper_release();
-  // arm_set_height(ARM_FRONT_FLOOR);
-  // passive_wait(5.0);
-  // gripper_grip();
-  // passive_wait(1.0);
-  // arm_reset();
-  // passive_wait(3.0);
-  // arm_set_height(ARM_BACK_PLATE_HIGH);
-  // passive_wait(3.0);
-  // gripper_release();
-  // passive_wait(1.0);
-  // arm_reset();
-// }
-// static void automatic_behavior() {
+static void directed_move(double x, double y, double z){
+   gripper_release();
+   passive_wait(2.0);
+   arm_ik(x,y,z);
+   passive_wait(6.0);
+   gripper_grip();
+    passive_wait(4.0);
+   arm_set_height(ARM_FRONT_CARDBOARD_BOX);
+   passive_wait(3.0);
+   arm_reset();
+   passive_wait(3.0);
+ arm_set_height(ARM_BACK_PLATE_HIGH);
+ passive_wait(3.0);
+ gripper_release();
+ passive_wait(1.0);
+ arm_reset();
+ passive_wait(3.0);  
+}
+static void automatic_behavior() {
   // grap_front();
   // grap_right();
   // grap_left();
   // move_Kuka('f',2.0f);
   // move_Kuka('b',3.0f);
-  // directed_move(0.16f,0.0298225,1.25);
-// }
+  float eps_x = 0.156;
+  // arm_reset(3.f);
+  directed_move(0.373 - eps_x,0.07, 0.119);
+
+}
 
 static void display_helper_message() {
   printf("Control commands:\n");
@@ -142,99 +146,99 @@ static void display_helper_message() {
   printf(" Shift + arrows:   Handle the arm\n");
   printf(" Space: Reset\n");
 }
-static void manual_drive(){
-  int pc = 0;
-  wb_keyboard_enable(TIME_STEP);
+// static void manual_drive(){
+  // int pc = 0;
+  // wb_keyboard_enable(TIME_STEP);
  
-  while (true) {
-    step();
+  // while (true) {
+    // step();
 
-    int c = wb_keyboard_get_key();
-    if ((c >= 0) && c != pc) {
-      printf("%c", c);
-      switch (c) {
-        case WB_KEYBOARD_UP:
-          printf("Go forwards\n");
-          base_forwards();
-          break;
-        case WB_KEYBOARD_DOWN:
-          printf("Go backwards\n");
-          base_backwards();
-          break;
-        case WB_KEYBOARD_LEFT:
-          printf("Strafe left\n");
-          base_strafe_left();
-          break;
-        case WB_KEYBOARD_RIGHT:
-          printf("Strafe right\n");
-          base_strafe_right();
-          break;
-        case WB_KEYBOARD_PAGEUP:
-          printf("Turn left\n");
-          base_turn_left();
-          break;
-        case WB_KEYBOARD_PAGEDOWN:
-          printf("Turn right\n");
-          base_turn_right();
-          break;
-        case WB_KEYBOARD_END:
-        case ' ':
-          printf("Reset\n");
-          base_reset();
-          arm_reset();
-          break;
-        case '+':
-        case 388:
-        case 65585:
-          printf("Grip\n");
-          gripper_grip();
-          break;
-        case '-':
-        case 390:
-          printf("Ungrip\n");
-          gripper_release();
-          break;
-        case 332:
-        case WB_KEYBOARD_UP | WB_KEYBOARD_SHIFT:
-          printf("Increase arm height\n");
-          arm_increase_height();
-          break;
-        case 326:
-        case WB_KEYBOARD_DOWN | WB_KEYBOARD_SHIFT:
-          printf("Decrease arm height\n");
-          arm_decrease_height();
-          break;
-        case 330:
-        case WB_KEYBOARD_RIGHT | WB_KEYBOARD_SHIFT:
-          printf("Increase arm orientation\n");
-          arm_increase_orientation();
-          break;
-        case 328:
-        case WB_KEYBOARD_LEFT | WB_KEYBOARD_SHIFT:
-          printf("Decrease arm orientation\n");
-          arm_decrease_orientation();
-          break;
-        default:
-          fprintf(stderr, "Wrong keyboard input\n");
-          break;
-      }
-    }
-    pc = c;
-  }
+    // int c = wb_keyboard_get_key();
+    // if ((c >= 0) && c != pc) {
+      // printf("%c", c);
+      // switch (c) {
+        // case WB_KEYBOARD_UP:
+          // printf("Go forwards\n");
+          // base_forwards();
+          // break;
+        // case WB_KEYBOARD_DOWN:
+          // printf("Go backwards\n");
+          // base_backwards();
+          // break;
+        // case WB_KEYBOARD_LEFT:
+          // printf("Strafe left\n");
+          // base_strafe_left();
+          // break;
+        // case WB_KEYBOARD_RIGHT:
+          // printf("Strafe right\n");
+          // base_strafe_right();
+          // break;
+        // case WB_KEYBOARD_PAGEUP:
+          // printf("Turn left\n");
+          // base_turn_left();
+          // break;
+        // case WB_KEYBOARD_PAGEDOWN:
+          // printf("Turn right\n");
+          // base_turn_right();
+          // break;
+        // case WB_KEYBOARD_END:
+        // case ' ':
+          // printf("Reset\n");
+          // base_reset();
+          // arm_reset();
+          // break;
+        // case '+':
+        // case 388:
+        // case 65585:
+          // printf("Grip\n");
+          // gripper_grip();
+          // break;
+        // case '-':
+        // case 390:
+          // printf("Ungrip\n");
+          // gripper_release();
+          // break;
+        // case 332:
+        // case WB_KEYBOARD_UP | WB_KEYBOARD_SHIFT:
+          // printf("Increase arm height\n");
+          // arm_increase_height();
+          // break;
+        // case 326:
+        // case WB_KEYBOARD_DOWN | WB_KEYBOARD_SHIFT:
+          // printf("Decrease arm height\n");
+          // arm_decrease_height();
+          // break;
+        // case 330:
+        // case WB_KEYBOARD_RIGHT | WB_KEYBOARD_SHIFT:
+          // printf("Increase arm orientation\n");
+          // arm_increase_orientation();
+          // break;
+        // case 328:
+        // case WB_KEYBOARD_LEFT | WB_KEYBOARD_SHIFT:
+          // printf("Decrease arm orientation\n");
+          // arm_decrease_orientation();
+          // break;
+        // default:
+          // fprintf(stderr, "Wrong keyboard input\n");
+          // break;
+      // }
+    // }
+    // pc = c;
+  // }
 
-}
+// }
 
 int main(int argc, char **argv) {
   wb_robot_init();
-
+  //display_helper_message();
   base_init();
   arm_init();
   gripper_init();
-  passive_wait(2.0);
-  // automatic_behavior();
-  display_helper_message();
-  manual_drive();
-  wb_robot_cleanup();
+  arm_reset();
+  passive_wait(4.0);
+  automatic_behavior();
+  // manual_drive();
+  // wb_robot_cleanup();
 
   return 0;
 }

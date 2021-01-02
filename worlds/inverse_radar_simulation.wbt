@@ -1,0 +1,115 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.9283372492305387 0.3506746967697183 0.1233580509595657 0.7121926102271422
+  position 0.5513472902595641 1.4168632512501342 1.7702581404198983
+  followType "Mounted Shot"
+}
+TexturedBackground {
+  reflections FALSE
+  skyColor [
+    0 0.666667 1
+  ]
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0.235286 8.88191e-16 0.635918
+  rotation 0 1 0 0.17017
+  name "Arena"
+  floorSize 10 10
+}
+WoodenBox {
+  translation -0.164936 0.3 -4.04241
+}
+WoodenBox {
+  translation -0.479671 0.3 2.09897
+  name "wooden box(1)"
+}
+WoodenBox {
+  translation -3.76192 0.3 3.8602
+  name "wooden box(7)"
+}
+WoodenBox {
+  translation 5.67584 0.3 4.50369
+  rotation 0 1 0 0.196349
+  name "wooden box(2)"
+}
+WoodenBox {
+  translation -1.45354 0.3 4.90886
+  rotation 0 -1 0 0.15708
+  name "wooden box(3)"
+}
+WoodenBox {
+  translation 1.34428 0.3 5.12628
+  rotation 0 -1 0 0.15708
+  name "wooden box(4)"
+}
+WoodenBox {
+  translation -4.93844 0.3 -2.95048
+  rotation 0 -1 0 0.922843
+  name "wooden box(5)"
+}
+WoodenBox {
+  translation 4.86147 0.3 0.103577
+  rotation 0 -1 0 0.922843
+  name "wooden box(6)"
+}
+Solid {
+  translation 0.373 0.059 0.119
+  scale 1.043 1.043 1.043
+  children [
+    DEF BALL_SHAPE Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Sphere {
+        radius 0.02
+        subdivision 2
+      }
+    }
+  ]
+  boundingObject USE BALL_SHAPE
+  radarCrossSection 1
+}
+Solid {
+  translation 0.277292 0.0298225 0.23346
+  children [
+    USE BALL_SHAPE
+  ]
+  name "solid(1)"
+  boundingObject USE BALL_SHAPE
+  physics Physics {
+  }
+  radarCrossSection 1
+}
+Solid {
+  translation 0.322262 0.029822481412168367 1.11789
+  children [
+    USE BALL_SHAPE
+  ]
+  name "solid(2)"
+  boundingObject USE BALL_SHAPE
+  physics Physics {
+  }
+  radarCrossSection 1
+}
+Solid {
+  translation 0.682022 0.029822481412168367 1.19881
+  children [
+    USE BALL_SHAPE
+  ]
+  name "solid(3)"
+  boundingObject USE BALL_SHAPE
+  physics Physics {
+  }
+  radarCrossSection 1
+}
+Irb4600-40 {
+  rotation 1 0 0 -1.57
+  controller "<extern>"
+  supervisor TRUE
+}

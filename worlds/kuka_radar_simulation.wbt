@@ -3,9 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.980604397976874 -0.16939349245832683 -0.0985944186107075 1.0863325870514393
-  position -0.09872506070007599 1.8739013418425061 1.199235517401358
-  follow "youBot"
+  orientation -0.9283372492305387 0.3506746967697183 0.1233580509595657 0.7121926102271422
+  position 0.5513472902595641 1.4168632512501342 1.7702581404198983
   followType "Mounted Shot"
 }
 TexturedBackground {
@@ -22,9 +21,96 @@ RectangleArena {
   name "Arena"
   floorSize 10 10
 }
+WoodenBox {
+  translation -0.164936 0.3 -4.04241
+}
+WoodenBox {
+  translation -0.479671 0.3 2.09897
+  name "wooden box(1)"
+}
+WoodenBox {
+  translation -3.76192 0.3 3.8602
+  name "wooden box(7)"
+}
+WoodenBox {
+  translation 5.67584 0.3 4.50369
+  rotation 0 1 0 0.196349
+  name "wooden box(2)"
+}
+WoodenBox {
+  translation -1.45354 0.3 4.90886
+  rotation 0 -1 0 0.15708
+  name "wooden box(3)"
+}
+WoodenBox {
+  translation 1.34428 0.3 5.12628
+  rotation 0 -1 0 0.15708
+  name "wooden box(4)"
+}
+WoodenBox {
+  translation -4.93844 0.3 -2.95048
+  rotation 0 -1 0 0.922843
+  name "wooden box(5)"
+}
+WoodenBox {
+  translation 4.86147 0.3 0.103577
+  rotation 0 -1 0 0.922843
+  name "wooden box(6)"
+}
+Solid {
+  translation 0.373 0.059 0.119
+  scale 1.043 1.043 1.043
+  children [
+    DEF BALL_SHAPE Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Sphere {
+        radius 0.02
+        subdivision 2
+      }
+    }
+  ]
+  boundingObject USE BALL_SHAPE
+  radarCrossSection 1
+}
+Solid {
+  translation 0.277292 0.0298225 0.23346
+  children [
+    USE BALL_SHAPE
+  ]
+  name "solid(1)"
+  boundingObject USE BALL_SHAPE
+  physics Physics {
+  }
+  radarCrossSection 1
+}
+Solid {
+  translation 0.322262 0.029822481412168367 1.11789
+  children [
+    USE BALL_SHAPE
+  ]
+  name "solid(2)"
+  boundingObject USE BALL_SHAPE
+  physics Physics {
+  }
+  radarCrossSection 1
+}
+Solid {
+  translation 0.682022 0.029822481412168367 1.19881
+  children [
+    USE BALL_SHAPE
+  ]
+  name "solid(3)"
+  boundingObject USE BALL_SHAPE
+  physics Physics {
+  }
+  radarCrossSection 1
+}
 Robot {
-  translation 0.3299830600320912 0.09860185932318499 0.5867948860718789
-  rotation -0.9928037386100899 0.08586089878183699 0.08347839638016294 1.578195518566032
+  translation 0 0.12 0
+  rotation 1 0 0 -1.5708
   children [
     Group {
       children [
@@ -135,7 +221,8 @@ Robot {
           rotation 1 0 0 1.5708
           children [
             Transform {
-              scale 0.25 0.1 0.4
+              translation 0.02 0.03 0
+              scale 0.28 0.1 0.4
               children [
                 Shape {
                   appearance PBRAppearance {
@@ -243,7 +330,6 @@ Robot {
         }
         HingeJoint {
           jointParameters HingeJointParameters {
-            position 4.335510921887329e-08
             axis 0 0 1
             anchor 0 0 0.077
           }
@@ -260,8 +346,8 @@ Robot {
             }
           ]
           endPoint Solid {
-            translation -2.86885647622184e-05 -2.5757740283338388e-06 0.07676209196900316
-            rotation -0.06375512462229953 -0.7505969089515757 0.6576774014338146 2.577513254933494e-06
+            translation 0 0 0.077
+            rotation 0 0 1 0
             children [
               Group {
                 children [
@@ -327,7 +413,6 @@ Robot {
               }
               HingeJoint {
                 jointParameters HingeJointParameters {
-                  position 1.5700024166736648
                   axis 0 -1 0
                   anchor 0.033 0 0.07
                 }
@@ -345,7 +430,7 @@ Robot {
                 ]
                 endPoint Solid {
                   translation 0.033 0 0.07
-                  rotation 0 -1 0 1.570002416673665
+                  rotation 0 -1 0 0
                   children [
                     Group {
                       children [
@@ -398,7 +483,6 @@ Robot {
                     }
                     HingeJoint {
                       jointParameters HingeJointParameters {
-                        position -2.6350011436896126
                         axis 0 -1 0
                         anchor 0 0 0.155
                       }
@@ -416,7 +500,7 @@ Robot {
                       ]
                       endPoint Solid {
                         translation 0 0 0.155
-                        rotation 0 1 0 2.6350011436896126
+                        rotation 0 -1 0 0
                         children [
                           Group {
                             children [
@@ -496,7 +580,6 @@ Robot {
                           }
                           HingeJoint {
                             jointParameters HingeJointParameters {
-                              position 1.7800004225925892
                               axis 0 -1 0
                               anchor 0 0 0.135
                             }
@@ -514,7 +597,7 @@ Robot {
                             ]
                             endPoint Solid {
                               translation 0 0 0.135
-                              rotation 0 -1 0 1.7800004225925892
+                              rotation 0 -1 0 0
                               children [
                                 Group {
                                   children [
@@ -567,7 +650,6 @@ Robot {
                                 }
                                 HingeJoint {
                                   jointParameters HingeJointParameters {
-                                    position 4.061822340100632e-09
                                     axis 0 0 1
                                     anchor 0 0 0.081
                                   }
@@ -607,13 +689,11 @@ Robot {
                                       }
                                       SliderJoint {
                                         jointParameters JointParameters {
-                                          position -8.082250913399258e-12
                                           axis 0 1 0
                                         }
                                         device [
                                           LinearMotor {
                                             name "finger1"
-                                            minPosition -8.082250913399258e-12
                                             maxPosition 0.025
                                             maxForce 100
                                           }
@@ -622,7 +702,7 @@ Robot {
                                           }
                                         ]
                                         endPoint Solid {
-                                          translation 0 -8.082250913399258e-12 0.09
+                                          translation 0 0 0.09
                                           rotation 1 0 0 4.71239
                                           children [
                                             Shape {
@@ -680,7 +760,6 @@ Robot {
                                       }
                                       SliderJoint {
                                         jointParameters JointParameters {
-                                          position 7.89361579573354e-12
                                           axis 0 -1 0
                                         }
                                         device [
@@ -694,7 +773,7 @@ Robot {
                                           }
                                         ]
                                         endPoint Solid {
-                                          translation 0 -7.89361579573354e-12 0.09
+                                          translation 0 0 0.09
                                           rotation 0 -0.7071067811865476 0.7071067811865476 3.14159
                                           children [
                                             Shape {
@@ -871,7 +950,6 @@ Robot {
     }
     DEF WHEEL1 HingeJoint {
       jointParameters HingeJointParameters {
-        position -3.088338195249505e-08
         axis 0 1 0
         anchor 0.228 -0.158 -0.055
       }
@@ -885,8 +963,7 @@ Robot {
         }
       ]
       endPoint DEF WHEEL_SOLID Solid {
-        translation 0.2279707984762266 -0.15800256978506821 -0.055018591444196914
-        rotation 0 -1 0 2.9802322387695313e-08
+        translation 0.228 -0.158 -0.055
         children [
           Shape {
             appearance PBRAppearance {
@@ -1065,7 +1142,6 @@ Robot {
     }
     DEF WHEEL2 HingeJoint {
       jointParameters HingeJointParameters {
-        position -2.953894987833373e-08
         axis 0 1 0
         anchor 0.228 0.158 -0.055
       }
@@ -1079,8 +1155,7 @@ Robot {
         }
       ]
       endPoint DEF WHEEL_SOLID Solid {
-        translation 0.22797079882560128 0.1579974302106374 -0.05501875876041556
-        rotation 0 -1 0 2.9802322387695313e-08
+        translation 0.228 0.158 -0.055
         children [
           Shape {
             appearance PBRAppearance {
@@ -1259,7 +1334,6 @@ Robot {
     }
     DEF WHEEL3 HingeJoint {
       jointParameters HingeJointParameters {
-        position 9.008228994748527e-08
         axis 0 1 0
         anchor -0.228 -0.158 -0.055
       }
@@ -1273,8 +1347,7 @@ Robot {
         }
       ]
       endPoint DEF WHEEL_SOLID Solid {
-        translation -0.2280291579164434 -0.15800257031931075 -0.05503961403852255
-        rotation 0 1 0 8.940696716308595e-08
+        translation -0.228 -0.158 -0.055
         children [
           Shape {
             appearance PBRAppearance {
@@ -1453,7 +1526,6 @@ Robot {
     }
     DEF WHEEL4 HingeJoint {
       jointParameters HingeJointParameters {
-        position 9.142674177118242e-08
         axis 0 1 0
         anchor -0.228 0.158 -0.055
       }
@@ -1467,8 +1539,7 @@ Robot {
         }
       ]
       endPoint DEF WHEEL_SOLID Solid {
-        translation -0.22802915756706896 0.15799742967639457 -0.055039781354741094
-        rotation 0 1 0 8.940696716308595e-08
+        translation -0.228 0.158 -0.055
         children [
           Shape {
             appearance PBRAppearance {
@@ -1745,6 +1816,28 @@ Robot {
       rotation -0.004227930263245565 8.779420546637095e-09 0.9999910622629029 0.6544996938995746
       name "front left ds"
     }
+    Radar {
+      translation -0.29 7.62376e-09 0.01
+      rotation -0.5771968951617173 0.577656895078166 0.5771968951617173 -2.093935307179586
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.545098 0.545098 0.545098
+          }
+          geometry Sphere {
+            radius 0.025
+            subdivision 2
+          }
+        }
+      ]
+      rotationStep 0.2618
+      radarCrossSection 1
+      minRange 0.01
+      maxRange 2
+      horizontalFieldOfView 2.5
+      verticalFieldOfView 0.2
+      occlusion TRUE
+    }
   ]
   name "youBot"
   model "KUKA youBot"
@@ -1781,93 +1874,5 @@ Robot {
     ]
   }
   controller "<extern>"
-}
-WoodenBox {
-  translation -0.164936 0.3 -4.04241
-}
-WoodenBox {
-  translation -1.85171 0.3 1.13739
-  name "wooden box(1)"
-}
-WoodenBox {
-  translation -3.76192 0.3 3.8602
-  name "wooden box(7)"
-}
-WoodenBox {
-  translation 5.67584 0.3 4.50369
-  rotation 0 1 0 0.196349
-  name "wooden box(2)"
-}
-WoodenBox {
-  translation 1.99311 0.3 -0.120544
-  rotation 0 -1 0 0.15708
-  name "wooden box(3)"
-}
-WoodenBox {
-  translation 1.34428 0.3 5.12628
-  rotation 0 -1 0 0.15708
-  name "wooden box(4)"
-}
-WoodenBox {
-  translation -4.93844 0.3 -2.95048
-  rotation 0 -1 0 0.922843
-  name "wooden box(5)"
-}
-WoodenBox {
-  translation 4.86147 0.3 0.103577
-  rotation 0 -1 0 0.922843
-  name "wooden box(6)"
-}
-Solid {
-  translation 1.51291 0.0310875376825172 -0.620812
-  scale 1.043 1.043 1.043
-  children [
-    DEF BALL_SHAPE Shape {
-      appearance PBRAppearance {
-        roughness 1
-        metalness 0
-      }
-      geometry Sphere {
-        radius 0.03
-        subdivision 2
-      }
-    }
-  ]
-  boundingObject USE BALL_SHAPE
-  physics Physics {
-  }
-  radarCrossSection 1
-}
-Solid {
-  translation 0.459269 0.029821231465665347 -0.766406
-  children [
-    USE BALL_SHAPE
-  ]
-  name "solid(1)"
-  boundingObject USE BALL_SHAPE
-  physics Physics {
-  }
-  radarCrossSection 1
-}
-Solid {
-  translation 0.771777 0.029821231465665347 1.01984
-  children [
-    USE BALL_SHAPE
-  ]
-  name "solid(2)"
-  boundingObject USE BALL_SHAPE
-  physics Physics {
-  }
-  radarCrossSection 1
-}
-Solid {
-  translation 1.56373 0.029821231465665347 1.57751
-  children [
-    USE BALL_SHAPE
-  ]
-  name "solid(3)"
-  boundingObject USE BALL_SHAPE
-  physics Physics {
-  }
-  radarCrossSection 1
+  supervisor TRUE
 }

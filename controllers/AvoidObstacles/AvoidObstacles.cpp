@@ -12,6 +12,8 @@
 #include <webots/DistanceSensor.hpp>
 #include <webots/Radar.hpp>
 #include <webots/Motor.hpp>
+#include <webots/PositionSensor.hpp>
+#include <webots/Supervisor.hpp>
 #include <arm.h>
 #include <gripper.h>
 #include <base.h>
@@ -41,13 +43,12 @@ void passiveWait(double sec, Robot* robot) {
 	} while (start_time + sec > robot->getTime());
 }
 
-
-class KukaRobot : public Robot {
+class KukaRobot : public Supervisor {
 public:
-	KukaRobot() : Robot() {
-		
+	KukaRobot() : Supervisor() {
+
 	}
-	
+
 	void init() {
 		int timeStep = (int)this->getBasicTimeStep();
 		for (int i = 0; i < 4; i++) {
@@ -65,27 +66,27 @@ public:
 		this->getDistanceSensor("front left ds")->enable(timeStep);
 
 
-		//this->getRadar("radar")->enable(timeStep);
+		this->getRadar("radar")->enable(timeStep);
 
 		base_init();
 		arm_init();
 		gripper_init();
-		passiveWait(2.0, this);
+		passiveWait(4.0, this);
 	}
 
-	Motor* getFrontRightWheel() {
+	Motor* getFrontRightMotor() {
 		return this->getMotor("wheel1");
 	}
 
-	Motor* getFrontLeftWheel() {
+	Motor* getFrontLeftMotor() {
 		return this->getMotor("wheel2");
 	}
 
-	Motor* getBackRightWheel() {
+	Motor* getBackRightMotor() {
 		return this->getMotor("wheel3");
 	}
 
-	Motor* getBackLeftWheel() {
+	Motor* getBackLeftMotor() {
 		return this->getMotor("wheel4");
 	}
 
@@ -102,7 +103,7 @@ public:
 		ve.push_back(this->getDistanceSensor("front ds 1"));
 		ve.push_back(this->getDistanceSensor("front ds 2"));
 		ve.push_back(this->getDistanceSensor("front ds 3"));
-		
+
 		return ve;
 	}
 
@@ -111,22 +112,47 @@ public:
 	}
 
 	void loadObject(float x, float y, float z) {
-		 gripper_release();
-		 arm_ik(x, y, z);
-		 passiveWait(2.0, this);
-		 gripper_release();
-		 arm_set_height(ARM_FRONT_FLOOR);
-		 passiveWait(5.0, this);
-		 gripper_grip();
-		 passiveWait(1.0, this);
-		 arm_reset();
-		 passiveWait(3.0, this);
-		 arm_set_height(ARM_BACK_PLATE_HIGH);
-		 passiveWait(3.0, this);
-		 gripper_release();
-		 passiveWait(1.0, this);
-		 arm_reset();
+		release();
+		armInverseKinematics(x, y, z);
+		passiveWait(2.0, this);
+		release();
+		armSetHeight(ARM_FRONT_FLOOR);
+		passiveWait(5.0, this);
+		grip();
+		passiveWait(1.0, this);
+		armReset();
+		passiveWait(3.0, this);
+		armSetHeight(ARM_BACK_PLATE_HIGH);
+		passiveWait(3.0, this);
+		release();
+		passiveWait(1.0, this);
+		armReset();
 	}
+
+	void armReset() {
+		arm_reset();
+	}
+
+	void armSetHeight(Height h) {
+		arm_set_height(h);
+	}
+
+	void grip() {
+		gripper_grip();
+	}
+
+	void release() {
+		gripper_release();
+	}
+
+	void gripperSetGap(double gap) {
+		gripper_set_gap(gap);
+	}
+
+	void armInverseKinematics(double x, double y, double z) {
+		arm_ik(x, y, z);
+	}
+
 
 };
 
@@ -134,52 +160,80 @@ int main(int argc, char** argv) {
 	// create the Robot instance.
 	KukaRobot* kuka = new KukaRobot();
 	kuka->init();
+	auto arm = kuka->getFromDef("ARM");
+	auto target = kuka->getFromDef("KUKA_BOX");
 
-	//std::cout << kuka->getCenterRadar()->getNumberOfTargets();
-	// get the time step of the current world.
-	int timeStep = (int)kuka->getBasicTimeStep();
-	// Main loop:
-	// - perform simulation steps until Webots is stopping the controller
-	while (kuka->step(timeStep) != -1) {
+	auto targetPosition = target->getPosition();
+	auto armPosition = arm->getPosition();
+	auto kukaPosition = kuka->getSelf()->getPosition();
 
-		double leftSpeed = 0.5 * MAX_SPEED;
-		double rightSpeed = 0.5 * MAX_SPEED;
+	// Compute the position of the target relatively to the arm.
+	// x and y axis are inverted because the arm is not aligned with the Webots global axes.
+	auto x = targetPosition[0] - (armPosition[0] + kukaPosition[0]);
+	auto y = -(targetPosition[2] - (armPosition[2] + kukaPosition[2]));
+	auto z = targetPosition[1] - (armPosition[1] + kukaPosition[1]);
 
-		auto front_ds = kuka->getFrontDistanceSensor();
+	kuka->armInverseKinematics(x, y, z);
+	passiveWait(4.f, kuka);
+	//int nTarget = kuka->getCenterRadar()->getNumberOfTargets();
+	//std::cout << "found " << nTarget << " targets\n";
+	//const RadarTarget* targets = kuka->getCenterRadar()->getTargets();
 
-		// detect obstacles
-		bool right_obstacle =
-			front_ds[0]->getValue() < 950.f ||
-			front_ds[1]->getValue() < 950.f ||
-			front_ds[2]->getValue() < 950.f ||
-			kuka->getFrontRightDistanceSensor()->getValue() < 950.f;
+	/*kuka->armInverseKinematics(0.294379, 0.029, 0.379313);*/
 
-		// detect obstacles
-		bool left_obstacle =
-			front_ds[0]->getValue() < 950.f ||
-			front_ds[1]->getValue() < 950.f ||
-			front_ds[2]->getValue() < 950.f ||
-			kuka->getFrontLeftDistanceSensor()->getValue() < 950.f;
+	//for (int i = 0; i < nTarget; i++) {
+	//	auto theta = targets[i].azimuth;
+	//	auto len = targets[i].distance;
+	//	double x = len * cos(theta);
+	//	double z = len * sin(theta);
+	//	std::cout << x << '\n';
+	//	std::cout << z << '\n';
+	//	std::cout << "-----------------------------------------\n";
+	//}
+	 ////get the time step of the current world.
+	//int timeStep = (int)kuka->getBasicTimeStep();
+	// //Main loop:
+	// //- perform simulation steps until Webots is stopping the controller
+	//while (kuka->step(timeStep) != -1) {
 
-		if (left_obstacle) {
-			leftSpeed = 0.5 * MAX_SPEED;
-			rightSpeed = -0.5 * MAX_SPEED;
-		}
-		else {
-			if (right_obstacle) {
-				leftSpeed = -0.5 * MAX_SPEED;
-				rightSpeed = 0.5 * MAX_SPEED;
-			}
-		}
-		
-		kuka->getFrontLeftWheel()->setVelocity(leftSpeed);
-		kuka->getFrontRightWheel()->setVelocity(rightSpeed);
-		kuka->getBackLeftWheel()->setVelocity(leftSpeed);
-		kuka->getBackRightWheel()->setVelocity(rightSpeed);
-	}
+	//	double leftSpeed = 0.5 * MAX_SPEED;
+	//	double rightSpeed = 0.5 * MAX_SPEED;
+
+	//	auto front_ds = kuka->getFrontDistanceSensor();
+
+	//	// detect obstacles
+	//	bool right_obstacle =
+	//		front_ds[0]->getValue() < 950.f ||
+	//		front_ds[1]->getValue() < 950.f ||
+	//		front_ds[2]->getValue() < 950.f ||
+	//		kuka->getFrontRightDistanceSensor()->getValue() < 950.f;
+
+	//	// detect obstacles
+	//	bool left_obstacle =
+	//		front_ds[0]->getValue() < 950.f ||
+	//		front_ds[1]->getValue() < 950.f ||
+	//		front_ds[2]->getValue() < 950.f ||
+	//		kuka->getFrontLeftDistanceSensor()->getValue() < 950.f;
+
+	//	if (left_obstacle) {
+	//		leftSpeed =  MAX_SPEED;
+	//		rightSpeed = -MAX_SPEED;
+	//	}
+	//	else {
+	//		if (right_obstacle) {
+	//			leftSpeed = -MAX_SPEED;
+	//			rightSpeed = MAX_SPEED;
+	//		}
+	//	}
+
+	//	//kuka->getFrontLeftWheel()->setVelocity(leftSpeed);
+	//	//kuka->getFrontRightWheel()->setVelocity(rightSpeed);
+	//	//kuka->getBackLeftWheel()->setVelocity(leftSpeed);
+	//	//kuka->getBackRightWheel()->setVelocity(rightSpeed);
+	//}
 
 
-	// Enter here exit cleanup code.
+	 //Enter here exit cleanup code.
 
 	delete kuka;
 	return 0;
