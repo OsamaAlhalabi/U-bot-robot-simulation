@@ -17,8 +17,10 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.3320931017314954 -0.782587033146597 -0.526565957248626 4.058556928354543
-  position 2.2971709247839867 3.0835560189647824 -0.5587047176500073
+  orientation 0.03248504083432302 -0.9363594861704357 -0.34953631396555895 3.315201161098147
+  position 1.7869506464338538 2.710422778922569 -2.3625962499313062
+  follow "cube0"
+  followType "None"
 }
 TexturedBackground {
 }
@@ -61,8 +63,8 @@ DEF BIG_BOX Solid {
   }
 }
 DEF CUBE0 Solid {
-  translation 1.35498 0.66 -0.198623
-  rotation 0 1 0 0.523603
+  translation 1.34098 0.66 -0.159997
+  rotation 0 -1 0 -5.307179586466759e-06
   children [
     DEF CUBE Shape {
       appearance PBRAppearance {
@@ -87,8 +89,8 @@ DEF CUBE0 Solid {
   radarCrossSection 1
 }
 DEF CUBE1 Solid {
-  translation 1.41634 0.66 -0.0413396
-  rotation 0 1 0 0.523599
+  translation 1.41333 0.66 0.122981
+  rotation 0 -1 0 4.6928e-06
   children [
     USE CUBE
   ]
@@ -98,21 +100,9 @@ DEF CUBE1 Solid {
   physics USE PHYSICS_CUBE
   radarCrossSection 1
 }
-DEF CUBE2 Solid {
-  translation 1.50524 0.66 -0.208994
-  rotation 0 1 0 0.785398
-  children [
-    USE CUBE
-  ]
-  name "cube2"
-  contactMaterial "cube"
-  boundingObject USE BOUNDING_CUBE
-  physics USE PHYSICS_CUBE
-  radarCrossSection 1
-}
 DEF CUBE3 Solid {
-  translation 1.51938 0.66 -0.0958579
-  rotation 0 1 0 0.785398
+  translation 1.34014 0.66 -0.0148545
+  rotation 0 1 0 4.692820414042842e-06
   children [
     USE CUBE
   ]
@@ -123,8 +113,8 @@ DEF CUBE3 Solid {
   radarCrossSection 1
 }
 DEF CUBE4 Solid {
-  translation 1.32142 0.66 -0.11
-  rotation 0 -1 0 -0.261795307179586
+  translation 1.50539 0.66 -0.191737
+  rotation 0 1 0 -5.307179586466759e-06
   children [
     USE CUBE
   ]
@@ -448,6 +438,7 @@ Robot {
           name "Motor base"
           controlPID 20 0 0
           maxVelocity 2.3816
+          minPosition -6.28
           maxPosition 6.0335
           maxTorque 20
         }
